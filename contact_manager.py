@@ -3,7 +3,7 @@ from tkinter import messagebox, Scrollbar
 import json
 import os
 
-# ------------------- STORAGE -------------------
+
 FILE_NAME = "contacts.json"
 
 def load_contacts():
@@ -18,7 +18,7 @@ def save_contacts():
 
 contacts = load_contacts()
 
-# ------------------- LOGIC -------------------
+
 def update_listbox(data=None):
     listbox.delete(0, tk.END)
     display = data if data else contacts
@@ -35,7 +35,7 @@ def create_popup(title):
 def validate_phone(p):
     return (p.isdigit() and len(p) <= 10) or p == ""
 
-# ------------------- ADD CONTACT -------------------
+
 def add_contact():
     popup = create_popup("Add Contact")
 
@@ -55,13 +55,13 @@ def add_contact():
     category = tk.Entry(popup)
     category.pack()
 
-    # Enter key navigation
+    
     name.bind("<Return>", lambda e: phone.focus())
     phone.bind("<Return>", lambda e: email.focus())
     email.bind("<Return>", lambda e: category.focus())
     category.bind("<Return>", lambda e: save())
 
-    # Phone validation
+    
     vcmd = popup.register(validate_phone)
     phone.config(validate="key", validatecommand=(vcmd, "%P"))
 
@@ -88,7 +88,7 @@ def add_contact():
     tk.Button(popup, text="Save", bg="black", fg="white",
               width=12, command=save).pack(pady=10)
 
-# ------------------- UPDATE CONTACT -------------------
+
 def update_contact():
     selected = listbox.curselection()
     if not selected:
@@ -120,7 +120,7 @@ def update_contact():
     category.insert(0, c['category'])
     category.pack()
 
-    # Enter navigation
+    
     name.bind("<Return>", lambda e: phone.focus())
     phone.bind("<Return>", lambda e: email.focus())
     email.bind("<Return>", lambda e: category.focus())
@@ -147,7 +147,7 @@ def update_contact():
     tk.Button(popup, text="Update", bg="black", fg="white",
               width=12, command=save).pack(pady=10)
 
-# ------------------- DELETE -------------------
+
 def delete_contact():
     selected = listbox.curselection()
     if not selected:
@@ -158,7 +158,7 @@ def delete_contact():
     save_contacts()
     update_listbox()
 
-# ------------------- SEARCH -------------------
+
 def search_contact():
     popup = create_popup("Search Contact")
 
@@ -177,11 +177,11 @@ def search_contact():
     tk.Button(popup, text="Search", bg="black", fg="white",
               width=12, command=search).pack(pady=10)
 
-# ------------------- SHOW ALL -------------------
+
 def show_all():
     update_listbox()
 
-# ------------------- GUI -------------------
+
 root = tk.Tk()
 root.title("Contact Manager")
 root.geometry("700x500")
